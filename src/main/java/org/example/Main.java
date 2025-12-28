@@ -2,6 +2,7 @@ package org.example;
 
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -14,10 +15,15 @@ public class Main {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm:ss");
         LocalTime alarmTime;
 
-        System.out.println("Enter an alarm time (HH:MM:SS): ");
-        String inputTime = scanner.nextLine();
-        
+        try {
+            System.out.println("Enter an alarm time (HH:MM:SS): ");
+            String inputTime = scanner.nextLine();
 
+            alarmTime = LocalTime.parse(inputTime, formatter);
+            System.out.println("Alarm set for " + alarmTime);
+        } catch (DateTimeParseException e) {
+            System.out.println("Invalid format. Please use HH:MM:SS");
+        }
 
 
 
