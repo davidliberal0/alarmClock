@@ -27,14 +27,9 @@ public class Main {
             }
         }
 
-
-
-
-
-
-
-
-
+        AlarmClock alarmClock = new AlarmClock(alarmTime);
+        Thread alarmThread = new Thread(alarmClock);
+        alarmThread.start(); // executes run method
 
         scanner.close();
     }
