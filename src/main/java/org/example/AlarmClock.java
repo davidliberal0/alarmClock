@@ -5,15 +5,18 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalTime;
+import java.util.Scanner;
 
 public class AlarmClock implements Runnable {
 
     private final LocalTime alarmTime;
     private final String filePath;
+    private final Scanner scanner;
 
-    AlarmClock(LocalTime alarmTime, String filePath) {
+    AlarmClock(LocalTime alarmTime, String filePath, Scanner scanner) {
         this.alarmTime = alarmTime;
         this.filePath = filePath;
+        this.scanner = scanner;
     }
 
 
@@ -45,8 +48,10 @@ public class AlarmClock implements Runnable {
             Clip clip = AudioSystem.getClip();
             clip.open(audioStream);
             clip.start();
-
-            Thread.sleep(5000);
+            System.out.println("Press *Enter* to stop the alarm: ");
+            scanner.nextLine();
+            clip.stop();
+            scanner.close();
         } catch (UnsupportedAudioFileException e) {
             System.out.println("Audio file format is not suppoted.");
             throw new RuntimeException(e);
@@ -56,9 +61,6 @@ public class AlarmClock implements Runnable {
         } catch (IOException e) {
             System.out.println("Error reading audio file");
             throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
         }
-
     }
 }
