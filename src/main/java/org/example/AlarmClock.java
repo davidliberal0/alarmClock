@@ -5,9 +5,11 @@ import java.time.LocalTime;
 public class AlarmClock implements Runnable {
 
     private final LocalTime alarmTime;
+    private final String filePath;
 
-    AlarmClock(LocalTime alarmTime) {
+    AlarmClock(LocalTime alarmTime, String filePath) {
         this.alarmTime = alarmTime;
+        this.filePath = filePath;
     }
 
 
