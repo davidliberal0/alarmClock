@@ -1,5 +1,9 @@
 package org.example;
 
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.time.LocalTime;
 
 public class AlarmClock implements Runnable {
@@ -31,5 +35,30 @@ public class AlarmClock implements Runnable {
         }
 
         System.out.println("Alarm Noises ");
+        playSound(filePath);
+    }
+
+    private void playSound(String filePath) {
+        File audioFile = new File(filePath);
+
+        try (AudioInputStream audioStream = AudioSystem.getAudioInputStream(audioFile)) {
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            clip.start();
+
+            Thread.sleep(5000);
+        } catch (UnsupportedAudioFileException e) {
+            System.out.println("Audio file format is not suppoted.");
+            throw new RuntimeException(e);
+        } catch (LineUnavailableException e) {
+            System.out.println("Audio is unavailable.");
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            System.out.println("Error reading audio file");
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }

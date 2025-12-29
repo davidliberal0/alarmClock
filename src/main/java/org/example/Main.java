@@ -32,6 +32,5 @@ public class Main {
         Thread alarmThread = new Thread(alarmClock);
         alarmThread.start(); // executes run method
 
-        scanner.close();
     }
 }
